@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Project {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  category       String
+  imageUrls      String   // Storing as JSON string since SQLite doesn't support String[]
+  completionDate DateTime
+  clientName     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  projectType String
+  message     String
+  status      String   @default("New") // New, Contacted, Converted
+  createdAt   DateTime @default(now())
+}
